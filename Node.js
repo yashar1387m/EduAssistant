@@ -6,7 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 // این خط برای خواندن کلید از متغیرهای محیطی است
-const GEMINI_API_KEY = process.env.AIzaSyBXTG5jmQFKIJAGCpaivN3zl9ywMupCFOA; 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent'; // مدل پایدار جدید
 
 app.use(bodyParser.json({ limit: '50mb' })); // برای دریافت داده‌های بزرگ (مانند تصاویر)
@@ -34,4 +34,5 @@ app.post('/api/solve', async (req, res) => {
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+
 });
