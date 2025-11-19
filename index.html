@@ -1864,9 +1864,7 @@
         advancedCalcInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); solveWithAI(true); } });
         
         async function solveWithAI(isAdvanced = false) {
-            const apiKey = "AIzaSyBXTG5jmQFKIJAGCpaivN3zl9ywMupCFOA"; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
+            const localApiUrl = '/api/solve';
             const inputElement = document.getElementById(isAdvanced ? 'advanced-calc-input' : 'ai-input');
             const outputElement = document.getElementById(isAdvanced ? 'kami-output' : 'ai-output');
             const plotContainer = document.getElementById('plot-container');
@@ -1903,7 +1901,7 @@
             if (currentFile) { payload.contents[0].parts.push({ inlineData: { mimeType: currentFile.mimeType, data: currentFile.data } }); }
 
             try {
-                const response = await fetchWithRetry(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetchWithRetry(localApiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 if (!response.ok) { const errorData = await response.json(); throw new Error(errorData.error?.message || `HTTP error! status: ${response.status}`); }
                 const result = await response.json();
                 const candidate = result.candidates?.[0];
